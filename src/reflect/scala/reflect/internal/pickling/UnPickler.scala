@@ -247,13 +247,13 @@ abstract class UnPickler {
               // (4) Create a stub symbol to defer hard failure a little longer.
               val advice = moduleAdvice(s"${owner.fullName}.$name")
               val missingMessage =
-                s"""|${symbolTable.completingSymbol}missing or invalid dependency detected while loading class file '$filename'.
+                s"""|missing or invalid dependency detected while loading class file '$filename'.
                     |Could not access ${name.longString} in ${owner.kindString} ${owner.fullName},
                     |because it (or its dependencies) are missing. Check your build definition for
                     |missing or conflicting dependencies. (Re-run with `-Ylog-classpath` to see the problematic classpath.)
                     |A full rebuild may help if '$filename' was compiled against an incompatible version of ${owner.fullName}.$advice""".stripMargin
               val stubName = if (tag == EXTref) name else name.toTypeName
-              owner.newStubSymbol(stubName, missingMessage)
+              symbolTable.completingSymbol.newStubSymbol(stubName, missingMessage)
             }
           }
         }
