@@ -311,7 +311,7 @@ abstract class SymbolLoaders {
 
   val completedClassfiles = scala.collection.mutable.ListBuffer[AbstractFile]()
 
-  class ClassfileLoader(val classfile: AbstractFile, clazz: ClassSymbol, module: ModuleSymbol) extends SymbolLoader with FlagAssigningCompleter {
+  class ClassfileLoader(val classfile: AbstractFile) extends SymbolLoader with FlagAssigningCompleter {
     private object classfileParser extends {
       val symbolTable: SymbolLoaders.this.symbolTable.type = SymbolLoaders.this.symbolTable
     } with ClassfileParser {
