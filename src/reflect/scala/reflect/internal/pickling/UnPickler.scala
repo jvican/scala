@@ -246,6 +246,7 @@ abstract class UnPickler {
             adjust(mirrorThatLoaded(owner).missingHook(owner, name)) orElse {
               // (4) Create a stub symbol to defer hard failure a little longer.
               val advice = moduleAdvice(s"${owner.fullName}.$name")
+              //println((new Throwable).getStackTrace.mkString("\n")
               val missingMessage =
                 s"""|missing or invalid dependency detected while loading class file '$filename'.
                     |Could not access ${name.longString} in ${owner.kindString} ${owner.fullName},
@@ -253,7 +254,8 @@ abstract class UnPickler {
                     |missing or conflicting dependencies. (Re-run with `-Ylog-classpath` to see the problematic classpath.)
                     |A full rebuild may help if '$filename' was compiled against an incompatible version of ${owner.fullName}.$advice""".stripMargin
               val stubName = if (tag == EXTref) name else name.toTypeName
-              symbolTable.symbolOnCompletion.newStubSymbol(stubName, missingMessage)
+              val atPos = symbolTable.symbolOnCompletion.pos
+              NoSymbol.newStubSymbol(stubName, missingMessage, atPos)
             }
           }
         }
