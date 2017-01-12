@@ -24,4 +24,5 @@ superaccessors   6  add super accessors in traits and nested classes
        cleanup  21  platform-specific cleanups, generate reflective calls
     delambdafy  22  remove lambdas
            jvm  23  generate JVM bytecode
-      terminal  24  the last phase during a compilation run
+   analyzeDeps  24  collect completed dependencies from the classpath
+      terminal  25  the last phase during a compilation run
